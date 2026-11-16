@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Checagens de projetos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--s1:#0e0e0e;--s2:#181818;--line:#262626;--mute:#8f8f8f;--text:#f5f5f5;
+color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:400 16px/1.5 Manrope,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+#app{max-width:640px;margin:0 auto;padding:20px 18px 64px}
+h1{font-size:32px;line-height:1.1;font-weight:800;letter-spacing:-.03em;margin:22px 0 8px}
+h2{font-size:24px;line-height:1.2;font-weight:800;letter-spacing:-.02em;margin:6px 0 4px}
+p.sub{color:var(--mute);margin:0 0 24px}
+button,input,select{font:inherit;color:inherit}
+svg{display:block;flex:none}
+.brand{display:flex;align-items:center;gap:10px;color:var(--mute);font-weight:700;font-size:14px;letter-spacing:.04em;text-transform:uppercase}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:14px;min-height:44px}
+.back{background:none;border:0;color:var(--mute);cursor:pointer;padding:10px 10px 10px 0;min-height:44px}
+.back:hover{color:var(--text)}
+.steps{display:flex;gap:6px;margin-left:auto}
+.steps i{width:28px;height:4px;border-radius:2px;background:var(--line)}
+.steps i.on{background:#fff}
+.card,.btn,.opt{display:flex;align-items:center;gap:14px;width:100%;min-height:56px;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:var(--s1);text-align:left;cursor:pointer;margin-bottom:10px;transition:background .15s,border-color .15s}
+.card:hover,.btn:hover,.opt:hover{background:var(--s2);border-color:#3a3a3a}
+.card b{display:block;font-weight:700}
+.d{display:block;color:var(--mute);font-size:14px}
+.ci{width:44px;height:44px;border-radius:12px;background:var(--s2);border:1px solid var(--line);display:grid;place-items:center;flex:none}
+.card .row{flex:1}
+.btn{justify-content:center;font-weight:700;margin-bottom:0}
+.btn.primary{background:#fff;color:#000;border-color:#fff;margin-top:20px}
+.btn.primary:hover{background:#d9d9d9}
+.btn:disabled{background:var(--s2);color:var(--mute);border-color:var(--line);cursor:not-allowed}
+.btn.ghost{margin-top:10px}
+.btn.danger{background:none;border-color:transparent;color:var(--mute);margin-top:18px;font-weight:500}
+.btn.danger:hover{color:#fff;background:none}
+.opt.sel{border-color:#fff;background:var(--s2)}
+.box{flex:none;width:22px;height:22px;border-radius:7px;border:2px solid #555;display:grid;place-items:center}
+.radio{border-radius:50%}
+.sel .box{background:#fff;border-color:#fff}
+.sel .box::after{content:"";width:8px;height:8px;background:#000;border-radius:2px}
+.sel .radio::after{border-radius:50%}
+.oi{color:#fff;opacity:.9}
+.add{display:flex;gap:8px;margin:14px 0 6px}
+.add input,.field input,.field select{flex:1;min-width:0;width:100%;min-height:48px;background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.add button{flex:none;min-height:48px;padding:0 20px;border-radius:14px;border:1px solid var(--line);background:var(--s2);cursor:pointer;font-weight:700}
+.add button:hover{border-color:#3a3a3a}
+input:focus,select:focus,button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.lbl{color:var(--mute);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:26px 0 10px}
+.dates{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field label{display:block;color:var(--mute);font-size:13px;margin-bottom:6px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:14px 0 8px}
+.bar i{display:block;height:100%;background:#fff;transition:width .3s}
+.meta{color:var(--mute);font-size:14px}
+.empty{border:1px dashed var(--line);border-radius:16px;padding:28px 18px;color:var(--mute);text-align:center}
+.mrow{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tr{display:inline-flex;color:#fff;animation:pop .4s ease}
+@keyframes pop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
+.acts{display:flex;gap:8px;margin:14px 0 4px}
+.acts .btn{flex:1;min-height:44px;font-size:14px;gap:8px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:16px;margin-top:14px;background:var(--s1)}
+table{border-collapse:collapse;width:100%;min-width:max-content}
+th,td{padding:12px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);text-align:center;font-size:14px;vertical-align:middle}
+th:last-child,td:last-child{border-right:0}tr:last-child td{border-bottom:0}
+th{font-weight:700;background:var(--s2)}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--s1);min-width:160px;max-width:230px;z-index:1}
+th:first-child{background:var(--s2)}
+.ph{display:flex;align-items:center;gap:8px;justify-content:center;white-space:nowrap}
+.ph .pn{max-width:150px;overflow:hidden;text-overflow:ellipsis}
+.il{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.x{background:none;border:0;color:var(--mute);cursor:pointer;padding:6px;border-radius:8px;min-width:32px;min-height:32px;display:grid;place-items:center}
+.x:hover{color:#fff;background:var(--line)}
+.ck{width:24px;height:24px;accent-color:#fff;cursor:pointer}
+.mini{display:flex;gap:6px;color:var(--mute);margin-top:6px}
+.mini svg{width:16px;height:16px}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:#fff;color:#000;padding:12px 18px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:20;display:flex;gap:8px;align-items:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+var KEY="checagens-gps-v1",db={gps:[],projetos:[],itens:[],checagens:[]},cur=null,dl=null,$=document.getElementById("app");
+function blank(){return{gp:"",projetos:[],itens:[],ini:"",fim:""}}
+var draft=blank();
+try{var raw=localStorage.getItem(KEY);if(raw){var p0=JSON.parse(raw);if(p0&&typeof p0==="object")db=Object.assign(db,p0)}}catch(e){}
+db.checagens.forEach(function(c){if(c.projeto&&!c.projetos){c.projetos=[c.projeto];c.marc={};c.itens=c.itens.map(function(i){if(i.ok)c.marc[c.projeto+"||"+i.t]=true;return i.t});delete c.projeto}});
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){}}
+
+function svg(p,s){s=s||20;return '<svg viewBox="0 0 24 24" width="'+s+'" height="'+s+'" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>'}
+var IC={
+folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+building:'<path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M2 21h20M8 8h3M8 12h3M8 16h3"/>',
+home:'<path d="M3 11 12 4l9 7M5 10v10h14V10M10 20v-6h4v6"/>',
+code:'<path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.500 5l-3 14"/>',
+server:'<rect x="3" y="4" width="18" height="6" rx="1.500"/><rect x="3" y="14" width="18" height="6" rx="1.500"/><path d="M7 7h.01M7 17h.01"/>',
+mega:'<path d="M3 11v2a1 1 0 0 0 1 1h2l8 4V6L6 10H4a1 1 0 0 0-1 1zM18 9a4 4 0 0 1 0 6"/>',
+coin:'<circle cx="12" cy="12" r="9"/><path d="M14.500 9.500C14 8.500 13 8 12 8c-1.400 0-2.500.8-2.500 2s1 1.700 2.500 2 2.500.8 2.500 2-1.100 2-2.500 2c-1 0-2-.5-2.500-1.500M12 6v2M12 16v2"/>',
+heart:'<path d="M12 20S3.500 14.500 3.500 8.800A4.500 4.500 0 0 1 12 6.800a4.500 4.500 0 0 1 8.500 2C20.500 14.500 12 20 12 20zM7 12h3l1.500-3 2 5 1.500-2H18"/>',
+cap:'<path d="m2 9 10-5 10 5-10 5zM6 11.500V16c0 1.500 2.700 3 6 3s6-1.500 6-3v-4.500M22 9v6"/>',
+truck:'<path d="M2 6h11v10H2zM13 9h4l4 3v4h-8"/><circle cx="6.500" cy="18" r="1.800"/><circle cx="17.500" cy="18" r="1.800"/>',
+bolt:'<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+chart:'<path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-8"/>',
+shield:'<path d="M12 3 4 6v6c0 4.500 3.400 8 8 9 4.600-1 8-4.500 8-9V6z"/><path d="m9 12 2 2 4-4"/>',
+users:'<circle cx="9" cy="8" r="3.500"/><path d="M2.500 20a6.500 6.500 0 0 1 13 0M16 4.500a3.500 3.500 0 0 1 0 7M18 14.500a6.500 6.500 0 0 1 3.500 5.500"/>',
+leaf:'<path d="M5 19c0-9 5-14 15-14 0 10-5 15-14 15zM5 19l8-8"/>',
+cart:'<path d="M3 4h2l2.500 11h10L20 7H6"/><circle cx="9" cy="19" r="1.500"/><circle cx="17" cy="19" r="1.500"/>',
+factory:'<path d="M3 21V10l6 4v-4l6 4V6h3v15z"/>',
+trophy:'<path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H4v1a4 4 0 0 0 4 4M16 6h4v1a4 4 0 0 1-4 4M12 13v4M8 21h8M9 17h6"/>',
+trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',
+list:'<path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/>',
+edit:'<path d="M4 20h4L19 9a2.800 2.800 0 0 0-4-4L4 16zM14 6l4 4"/>',
+down:'<path d="M12 4v11M7 11l5 5 5-5M5 20h14"/>',
+check:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>'
+};
+var MAP=[[/obra|constru|predio|edific|reform|engenh|civil|canteiro/,"building"],[/casa|resid|apart|imovel|moradia|condomin/,"home"],
+[/infra|rede|servidor|nuvem|cloud|datacenter/,"server"],[/app|sistem|software|site|portal|web|api|digital|tecnolog|plataforma|\bti\b/,"code"],
+[/market|campanha|publicid|comunica|midia|brand|divulga/,"mega"],[/financ|orcament|custo|invest|contab|fiscal|pagament|fatur|caixa/,"coin"],
+[/saude|hospital|clinic|medic|farmac|bem.?estar/,"heart"],[/educa|treinament|curso|capacit|escola|aula|ensino|academ/,"cap"],
+[/logist|transport|entrega|frota|frete|estoque|armazem/,"truck"],[/energia|solar|eletric|eolic|usina|subestac/,"bolt"],
+[/event|feira|congresso|lancament|cronograma|agenda/,"cal"],[/relatorio|pesquisa|analise|indicador|dashboard|metric|dados/,"chart"],
+[/seguranca|complian|auditoria|lgpd|risco|qualidade|\biso\b/,"shield"],[/\brh\b|pessoas|equipe|recrut|selecao|talento|cultura|onboarding|atendiment/,"users"],
+[/ambient|sustent|esg|recicl|verde|agro|florest/,"leaf"],[/vend|compra|loja|ecommerce|comercial|varejo|cliente/,"cart"],
+[/industr|fabric|producao|manufat|planta|operac/,"factory"]];
+function icon(n){var s=n.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();for(var i=0;i<MAP.length;i++)if(MAP[i][0].test(s))return svg(IC[MAP[i][1]]);return svg(IC.folder)}
+var TROPHY=svg(IC.trophy,20);
+
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function alfa(a){return a.slice().sort(function(x,y){return x.localeCompare(y,"pt-BR",{sensitivity:"base"})})}
+function fmt(d){if(!d)return"";var p=d.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
+function go(v){location.hash=v}
+function view(){return location.hash.slice(1)||"home"}
+function cur_(){return db.checagens.filter(function(x){return x.id===cur})[0]}
+function valid(){return !!(draft.gp&&draft.projetos.length&&draft.itens.length&&draft.ini&&draft.fim&&draft.fim>=draft.ini)}
+function prog(c){var ok=0;c.itens.forEach(function(i){c.projetos.forEach(function(p){if(c.marc[p+"||"+i])ok++})});return{ok:ok,total:c.itens.length*c.projetos.length}}
+function pdone(c,pr){return c.itens.length>0&&c.itens.every(function(i){return c.marc[pr+"||"+i]})}
+var tt;function toast(m){var e=document.getElementById("toast");e.innerHTML=svg(IC.check,18)+"<span>"+esc(m)+"</span>";e.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){e.classList.remove("on")},2400)}
+function q(s){s=String(s);if(/^[=+\-@\t\r]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"'}
+function exportCsv(){
+  var c=cur_();if(!c||!dl)return;
+  var L=[[q("Gerente"),q(c.gp)],[q("Período"),q(fmt(c.ini)+" a "+fmt(c.fim))],[]];
+  L.push([q("Item")].concat(c.projetos.map(q)));
+  c.itens.forEach(function(i){L.push([q(i)].concat(c.projetos.map(function(p){return q(c.marc[p+"||"+i]?"Sim":"Não")})))});
+  var txt="\ufeff"+L.map(function(r){return r.join(";")}).join("\r\n");
+  var nome="checagem-"+c.gp.replace(/[^\w\u00C0-\u017F]+/g,"-")+"-"+c.ini+".csv";
+  dl.save({filename:nome,data:txt}).then(function(){toast("Arquivo CSV salvo")}).catch(function(e){if(!e||e.code!=="declined")alert("Não foi possível salvar o arquivo.")});
+}
+
+function steps(n){return '<div class="steps" aria-label="Etapa '+n+' de 3">'+[1,2,3].map(function(i){return '<i class="'+(i<=n?"on":"")+'"></i>'}).join("")+'</div>'}
+function top(back,n){return '<div class="top"><button class="back" data-go="'+back+'">‹ Voltar</button>'+(n?steps(n):"")+'</div>'}
+function saveSec(){return draft.editId?'<button class="btn ghost" data-act="criar"'+(valid()?"":" disabled")+'>Salvar alterações e voltar à tabela</button>':""}
+function picker(list,selected,act,ph){
+  var h=list.length?alfa(list).map(function(n){return '<button class="opt'+(n===selected?" sel":"")+'" data-act="'+act+'" data-v="'+esc(n)+'"><span class="box radio"></span><span>'+esc(n)+'</span></button>'}).join(""):'<div class="empty">Nada por aqui ainda. Inclua o primeiro abaixo.</div>';
+  return h+'<div class="add"><input id="novo" aria-label="'+ph+'" placeholder="'+ph+'" maxlength="80"><button data-act="'+act+'-add">Incluir</button></div>';
+}
+function multi(list,sel,act,ph){
+  var h=list.length?alfa(list).map(function(n){return '<button class="opt'+(sel.indexOf(n)>-1?" sel":"")+'" data-act="'+act+'" data-v="'+esc(n)+'"><span class="box"></span><span class="oi">'+icon(n)+'</span><span>'+esc(n)+'</span></button>'}).join(""):'<div class="empty">Nada por aqui ainda. Inclua o primeiro abaixo.</div>';
+  return h+'<div class="add"><input id="novo" aria-label="'+ph+'" placeholder="'+ph+'" maxlength="80"><button data-act="'+act+'-add">Incluir</button></div>';
+}
+
+function home(){
+  var n=db.checagens.length;
+  return '<div class="brand">'+svg(IC.check,22)+'<span>Checagens</span></div><h1>Acompanhe cada projeto, item por item.</h1><p class="sub">Escolha o gerente, os projetos e os itens a conferir.</p>'+
+  '<button class="card" data-act="nova"><span class="ci">'+svg(IC.plus,22)+'</span><span class="row"><b>Nova checagem</b><span class="d">Gerente, projetos, itens e período</span></span></button>'+
+  '<button class="card" data-go="existentes"><span class="ci">'+svg(IC.list,22)+'</span><span class="row"><b>Checagem existente</b><span class="d">'+(n?n+(n>1?" checagens salvas":" checagem salva"):"Nenhuma salva ainda")+'</span></span></button>';
+}
+function existentes(){
+  var l=db.checagens.slice().sort(function(a,b){return (a.gp+a.ini).localeCompare(b.gp+b.ini,"pt-BR")});
+  var h=top("home")+'<h2>Checagens existentes</h2><p class="sub">Toque para abrir, ver a tabela e editar.</p>';
+  if(!l.length)return h+'<div class="empty">Nenhuma checagem criada. Comece uma nova na tela inicial.</div>';
+  return h+l.map(function(c){var p=prog(c),full=p.total>0&&p.ok===p.total;
+    return '<button class="card" data-act="abrir" data-v="'+c.id+'"><span class="row"><span class="mrow"><b>'+esc(c.gp)+'</b><span class="meta">'+(full?'<span class="tr" role="img" aria-label="Checagem completa">'+TROPHY+'</span>':p.ok+'/'+p.total)+'</span></span><span class="d">'+fmt(c.ini)+' a '+fmt(c.fim)+' · '+c.projetos.length+(c.projetos.length>1?' projetos':' projeto')+'</span><span class="mini">'+c.projetos.slice(0,6).map(icon).join("")+'</span></span></button>'}).join("");
+}
+function nGp(){return top(draft.editId?"checagem":"home",1)+'<h2>'+(draft.editId?'Editar checagem':'Gerente de projetos')+'</h2><p class="sub">'+(draft.editId?'Altere o gerente ou avance para mudar projetos, itens e período.':'Escolha quem fará a checagem.')+'</p>'+picker(db.gps,draft.gp,"gp","Nome do gerente")+'<button class="btn primary" data-go="nova-projeto"'+(draft.gp?"":" disabled")+'>Continuar</button>'+saveSec()}
+function nProj(){return top("nova-gerente",2)+'<h2>Projetos</h2><p class="sub">Gerente: '+esc(draft.gp)+'. Escolha um ou mais projetos.</p>'+multi(db.projetos,draft.projetos,"proj","Nome do projeto")+'<button class="btn primary" data-go="nova-itens"'+(draft.projetos.length?"":" disabled")+'>Continuar</button>'+saveSec()}
+function nItens(){
+  var h=top("nova-projeto",3)+'<h2>Itens e período</h2><p class="sub">'+esc(draft.gp)+' · '+draft.projetos.length+(draft.projetos.length>1?' projetos':' projeto')+'</p>';
+  h+='<div class="dates"><div class="field"><label for="ini">Dia inicial</label><input type="date" id="ini" value="'+draft.ini+'"></div><div class="field"><label for="fim">Dia final</label><input type="date" id="fim" value="'+draft.fim+'"></div></div>';
+  if(draft.fim&&draft.fim<draft.ini)h+='<p class="meta">O dia final precisa ser igual ou posterior ao dia inicial.</p>';
+  if(db.checagens.length)h+='<div class="lbl">Reaproveitar itens</div><div class="field"><select id="copiar" aria-label="Reaproveitar itens de uma checagem anterior"><option value="">Escolher checagem anterior…</option>'+db.checagens.map(function(c){return '<option value="'+c.id+'">'+esc(c.gp)+' · '+esc(c.projetos.join(", "))+' · '+fmt(c.ini)+'</option>'}).join("")+'</select></div>';
+  h+='<div class="lbl">Itens de checagem</div>';
+  h+=db.itens.length?alfa(db.itens).map(function(n){return '<button class="opt'+(draft.itens.indexOf(n)>-1?" sel":"")+'" data-act="item" data-v="'+esc(n)+'"><span class="box"></span><span>'+esc(n)+'</span></button>'}).join(""):'<div class="empty">Inclua os itens que serão conferidos.</div>';
+  h+='<div class="add"><input id="novo" aria-label="Novo item de checagem" placeholder="Novo item de checagem" maxlength="120"><button data-act="item-add">Incluir</button></div>';
+  return h+'<button class="btn primary" data-act="criar"'+(valid()?"":" disabled")+'>'+(draft.editId?"Salvar alterações":"Criar checagem")+'</button>';
+}
+function check(){
+  var c=cur_();if(!c){go("home");return""}
+  var p=prog(c),pct=p.total?Math.round(p.ok/p.total*100):0,full=p.total>0&&p.ok===p.total;
+  var h=top("existentes")+'<div class="mrow"><h2>'+esc(c.gp)+'</h2>'+(full?'<span class="tr" role="img" aria-label="Checagem completa">'+svg(IC.trophy,26)+'</span>':'')+'</div><div class="meta">'+fmt(c.ini)+' a '+fmt(c.fim)+'</div>';
+  h+='<div class="bar" role="progressbar" aria-valuenow="'+pct+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+pct+'%"></i></div><div class="meta">'+p.ok+' de '+p.total+' conferências concluídas</div>';
+  h+='<div class="acts"><button class="btn" data-act="editar">'+svg(IC.edit,18)+'Editar</button>'+(dl?'<button class="btn" data-act="csv">'+svg(IC.down,18)+'CSV</button>':'')+'</div>';
+  h+='<div class="tw"><table><thead><tr><th scope="col">Item</th>'+c.projetos.map(function(pr,k){return '<th scope="col"><div class="ph"><span class="oi">'+icon(pr)+'</span><span class="pn" title="'+esc(pr)+'">'+esc(pr)+'</span>'+(pdone(c,pr)?'<span class="tr" role="img" aria-label="Projeto concluído">'+TROPHY+'</span>':'')+'<button class="x" data-act="rmproj" data-v="'+k+'" aria-label="Remover projeto '+esc(pr)+'">'+svg(IC.trash,16)+'</button></div></th>'}).join("")+'</tr></thead><tbody>';
+  h+=c.itens.map(function(it,k){return '<tr><td><div class="il"><span>'+esc(it)+'</span><button class="x" data-act="rmitem" data-v="'+k+'" aria-label="Remover item '+esc(it)+'">'+svg(IC.trash,16)+'</button></div></td>'+c.projetos.map(function(pr,j){return '<td><input type="checkbox" class="ck" data-act="cel" data-i="'+k+'" data-j="'+j+'"'+(c.marc[pr+"||"+it]?" checked":"")+' aria-label="'+esc(it)+' em '+esc(pr)+'"></td>'}).join("")+'</tr>'}).join("");
+  h+='</tbody></table></div>';
+  var rest=alfa(db.projetos).filter(function(x){return c.projetos.indexOf(x)<0});
+  h+='<div class="add"><input id="novo-item" aria-label="Novo item na tabela" placeholder="Novo item na tabela" maxlength="120"><button data-act="tb-item">Incluir</button></div>';
+  h+='<div class="add"><input id="novo-proj" list="lp" aria-label="Incluir projeto na tabela" placeholder="Incluir projeto na tabela" maxlength="80"><button data-act="tb-proj">Incluir</button></div><datalist id="lp">'+rest.map(function(x){return '<option value="'+esc(x)+'">'}).join("")+'</datalist>';
+  h+='<button class="btn primary" data-act="salvanova">Salvar e começar nova checagem</button>';
+  h+='<button class="btn danger" data-act="excluir">Excluir esta checagem</button>';
+  return h;
+}
+function render(){
+  var tw=$.querySelector(".tw"),sl=tw?tw.scrollLeft:0,v=view(),h;
+  if(v==="existentes")h=existentes();
+  else if(v==="nova-gerente")h=nGp();
+  else if(v==="nova-projeto")h=nProj();
+  else if(v==="nova-itens")h=nItens();
+  else if(v==="checagem")h=check();
+  else h=home();
+  $.innerHTML=h;
+  var t2=$.querySelector(".tw");if(t2)t2.scrollLeft=sl;
+}
+function addTo(list){
+  var el=document.getElementById("novo"),n=el?el.value.trim():"";if(!n)return null;
+  var ex=list.filter(function(x){return x.toLowerCase()===n.toLowerCase()})[0];
+  if(ex)n=ex;else list.push(n);save();return n;
+}
+$.addEventListener("click",function(e){
+  var t=e.target.closest("[data-go],[data-act]");if(!t||t.disabled||t.dataset.act==="cel")return;
+  if(t.dataset.go){go(t.dataset.go);return}
+  var a=t.dataset.act,v=t.dataset.v,n;
+  if(a==="nova"){draft=blank();go("nova-gerente")}
+  else if(a==="gp"){draft.gp=v;render()}
+  else if(a==="gp-add"){n=addTo(db.gps);if(n){draft.gp=n;render()}}
+  else if(a==="proj"){var i0=draft.projetos.indexOf(v);if(i0>-1)draft.projetos.splice(i0,1);else draft.projetos.push(v);render()}
+  else if(a==="proj-add"){n=addTo(db.projetos);if(n){if(draft.projetos.indexOf(n)<0)draft.projetos.push(n);render()}}
+  else if(a==="item"){var i1=draft.itens.indexOf(v);if(i1>-1)draft.itens.splice(i1,1);else draft.itens.push(v);render()}
+  else if(a==="item-add"){n=addTo(db.itens);if(n){if(draft.itens.indexOf(n)<0)draft.itens.push(n);render()}}
+  else if(a==="criar"){
+    if(!valid())return;
+    var c;
+    if(draft.editId&&cur_()){
+      c=cur_();c.gp=draft.gp;c.projetos=draft.projetos.slice();c.itens=draft.itens.slice();c.ini=draft.ini;c.fim=draft.fim;
+      var m={};c.itens.forEach(function(it){c.projetos.forEach(function(pr){var k=pr+"||"+it;if(c.marc[k])m[k]=true})});c.marc=m;
+    }else{
+      c={id:"c"+Date.now(),gp:draft.gp,projetos:draft.projetos.slice(),ini:draft.ini,fim:draft.fim,itens:draft.itens.slice(),marc:{}};
+      db.checagens.push(c);
+    }
+    draft=blank();save();cur=c.id;go("checagem");
+  }
+  else if(a==="abrir"){cur=v;go("checagem")}
+  else if(a==="editar"){var ce=cur_();draft={gp:ce.gp,projetos:ce.projetos.slice(),itens:ce.itens.slice(),ini:ce.ini,fim:ce.fim,editId:ce.id};go("nova-gerente")}
+  else if(a==="csv"){exportCsv()}
+  else if(a==="salvanova"){save();draft=blank();go("nova-gerente");toast("Checagem salva")}
+  else if(a==="tb-item"||a==="tb-proj"){
+    var cc=cur_(),el=document.getElementById(a==="tb-item"?"novo-item":"novo-proj"),nm=el?el.value.trim():"";
+    if(nm){var key=a==="tb-item"?"itens":"projetos",L=a==="tb-item"?db.itens:db.projetos;
+      var ex=L.filter(function(x){return x.toLowerCase()===nm.toLowerCase()})[0];if(ex)nm=ex;else L.push(nm);
+      if(cc[key].indexOf(nm)<0)cc[key].push(nm);save();render()}
+  }
+  else if(a==="rmproj"){var c3=cur_(),pn=c3.projetos[+v];if(confirm("Remover o projeto “"+pn+"” desta checagem?")){c3.projetos.splice(+v,1);c3.itens.forEach(function(i){delete c3.marc[pn+"||"+i]});save();render()}}
+  else if(a==="rmitem"){var c4=cur_(),im=c4.itens[+v];if(confirm("Remover o item “"+im+"” desta checagem?")){c4.itens.splice(+v,1);c4.projetos.forEach(function(p2){delete c4.marc[p2+"||"+im]});save();render()}}
+  else if(a==="excluir"){if(confirm("Excluir esta checagem? Essa ação não pode ser desfeita.")){db.checagens=db.checagens.filter(function(x){return x.id!==cur});save();go("existentes")}}
+});
+$.addEventListener("change",function(e){
+  var t=e.target;
+  if(t.dataset.act==="cel"){
+    var c5=cur_(),pr=c5.projetos[+t.dataset.j],k5=pr+"||"+c5.itens[+t.dataset.i],was=pdone(c5,pr),i5=t.dataset.i,j5=t.dataset.j;
+    if(t.checked)c5.marc[k5]=true;else delete c5.marc[k5];
+    save();render();
+    var f=$.querySelector('[data-act="cel"][data-i="'+i5+'"][data-j="'+j5+'"]');if(f)f.focus();
+    if(!was&&pdone(c5,pr))toast("Projeto “"+pr+"” concluído");
+  }
+  else if((t.id==="cini"||t.id==="cfim")&&t.value){var c6=cur_();c6[t.id==="cini"?"ini":"fim"]=t.value;save();render()}
+  else if(t.id==="ini"||t.id==="fim"){draft[t.id]=t.value;render()}
+  else if(t.id==="copiar"&&t.value){
+    var c=db.checagens.filter(function(x){return x.id===t.value})[0];
+    if(c)c.itens.forEach(function(i){if(db.itens.indexOf(i)<0)db.itens.push(i);if(draft.itens.indexOf(i)<0)draft.itens.push(i)});
+    save();render();
+  }
+});
+$.addEventListener("keydown",function(e){
+  if(e.key==="Enter"&&/^novo/.test(e.target.id||"")){var b=e.target.parentNode.querySelector("button");if(b)b.click()}
+});
+window.addEventListener("hashchange",function(){render();window.scrollTo(0,0)});
+render();
+if(window.claude&&window.claude.use){window.claude.use("downloads").then(function(d){dl=d;if(view()==="checagem")render()}).catch(function(){})}
+})();
+</script>
+</body>
+</html>
